@@ -1,9 +1,10 @@
-package com.jabama.challenge.github
+package com.jabama.challenge.presentation
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.jabama.challenge.github.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 const val CLIENT_ID = "CLIENT_ID"
