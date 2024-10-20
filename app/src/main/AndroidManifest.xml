@@ -8,7 +8,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name="com.jabama.challenge.App">
+        android:name="com.jabama.challenge.Application">
         <activity
             android:name="com.jabama.challenge.presentation.MainActivity"
             android:label="@string/app_name"
