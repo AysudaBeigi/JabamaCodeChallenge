@@ -1,11 +1,14 @@
-package com.jabama.challenge.github
+package com.example.login.presentation
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import com.jabama.challenge.network.oauth.RequestAccessToken
-import com.jabama.challenge.repository.oauth.AccessTokenDataSource
-import com.jabama.challenge.repository.token.TokenRepository
+import com.example.login.data.model.RequestAccessToken
+import com.example.login.domain.AccessTokenDataSource
+import com.example.login.domain.TokenRepository
+import com.jabama.challenge.presentation.CLIENT_ID
+import com.jabama.challenge.presentation.CLIENT_SECRET
+import com.jabama.challenge.presentation.REDIRECT_URI
 import kotlinx.android.synthetic.main.login_uri_activity.*
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
