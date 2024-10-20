@@ -1,8 +1,6 @@
-package com.jabama.challenge.network.di
+package com.jabama.challenge.di
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.jabama.challenge.repository.token.TokenRepository
-import com.jabama.challenge.repository.token.TokenRepositoryImpl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -45,9 +43,5 @@ val networkModule = module {
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
-    }
-
-    single {
-        TokenRepositoryImpl(get()) as TokenRepository
     }
 }

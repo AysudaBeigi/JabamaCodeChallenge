@@ -1,14 +1,15 @@
 package com.jabama.challenge.di
 
 import androidx.preference.PreferenceManager
-import com.jabama.challenge.repository.token.TokenRepositoryImpl
+import com.example.login.data.api.AccessTokenService
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import retrofit2.Retrofit
 
 const val APPLICATION_CONTEXT = "APPLICATION_CONTEXT"
 
 val appModule = module {
-    single { TokenRepositoryImpl(get()) }
+    factory { get<Retrofit>(named(RETROFIT)).create(AccessTokenService::class.java) }
    //single(named(APPLICATION_CONTEXT)) { applicationContext }
     single { PreferenceManager.getDefaultSharedPreferences(get()) }
 }
