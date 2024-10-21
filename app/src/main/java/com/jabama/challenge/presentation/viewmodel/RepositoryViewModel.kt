@@ -12,6 +12,8 @@ import com.jabama.challenge.domain.model.Repository
 import com.jabama.challenge.domain.usecase.GetRepositoryListUseCase
 import com.jabama.challenge.domain.usecase.ReadTokenUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -21,18 +23,20 @@ class RepositoryViewModel(
     private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
 ) : ViewModel() {
 
-    private val _state: MutableStateFlow<GithubState> = MutableStateFlow(GithubState())
+    private val _state: MutableStateFlow<RepositoryState> = MutableStateFlow(RepositoryState())
 
-    data class GithubState(
+    val state: StateFlow<RepositoryState> = _state.asStateFlow()
+
+    data class RepositoryState(
         val loadableToken: LoadableData<String> = NotLoaded,
         val loadableRepositories: LoadableData<List<Repository>> = NotLoaded,
     )
 
     init {
-
+       loadRepositoryList()
     }
 
-    fun readToke() {
+    private fun loadRepositoryList() {
         viewModelScope.launch(coroutineDispatcherProvider.ioDispatcher()) {
             _state.update {
                 it.copy(loadableToken = Loading)
@@ -43,16 +47,16 @@ class RepositoryViewModel(
                 _state.update {
                     it.copy(loadableToken = Loaded(token))
                 }
+                getRepositories(token)
             }.onFailure { throwable ->
                 _state.update {
                     it.copy(loadableToken = Failed(throwable))
                 }
             }
-
         }
     }
 
-    fun getRepositories(token: String) {
+    private fun getRepositories(token: String) {
         viewModelScope.launch(coroutineDispatcherProvider.ioDispatcher()) {
             _state.update {
                 it.copy(loadableRepositories = Loading)
@@ -71,4 +75,11 @@ class RepositoryViewModel(
 
         }
     }
+
+    fun searchRepository(keyword: String): List<Repository>? {
+        return _state.value.loadableRepositories.data?.filter {
+            it.name.contains(keyword)
+        }
+    }
+
 }
