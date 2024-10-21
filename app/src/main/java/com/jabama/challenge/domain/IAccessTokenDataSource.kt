@@ -1,9 +1,8 @@
 package com.jabama.challenge.domain
 
 import com.jabama.challenge.data.model.RequestAccessTokenDto
-import com.jabama.challenge.data.model.ResponseAccessTokenDto
-import kotlinx.coroutines.Deferred
+import com.jabama.challenge.domain.model.ResponseAccessToken
 
 interface IAccessTokenDataSource {
-    fun accessToken(requestAccessTokenDto: RequestAccessTokenDto): Deferred<ResponseAccessTokenDto>
+   suspend fun accessToken(requestAccessTokenDto: RequestAccessTokenDto): ResponseAccessToken
 }

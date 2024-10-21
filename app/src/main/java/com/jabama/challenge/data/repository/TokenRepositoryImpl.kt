@@ -1,18 +1,27 @@
 package com.jabama.challenge.data.repository
 
 import android.content.SharedPreferences
+import com.jabama.challenge.base.CoroutineDispatcherProvider
 import com.jabama.challenge.domain.ITokenRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 
-class TokenRepositoryImpl(private val sharedPreferences: SharedPreferences) :
-    ITokenRepository {
-    override fun saveToken(token: String): Deferred<Unit> =
-        CoroutineScope(Dispatchers.IO).async { sharedPreferences.edit().apply { putString(TOKEN, token) }.apply() }
+private const val TOKEN = "TOKEN"
 
+class TokenRepositoryImpl(
+    private val sharedPreferences: SharedPreferences,
+    private val coroutineDispatcherProvider: CoroutineDispatcherProvider
+) : ITokenRepository {
 
-    override fun readToken(): Deferred<String> =
-        CoroutineScope(Dispatchers.IO).async { sharedPreferences.getString(TOKEN, "") ?: "" }
+    override suspend fun saveToken(token: String): Unit =
+        withContext(coroutineDispatcherProvider.ioDispatcher()) {
+            sharedPreferences.edit().apply { putString(TOKEN, token) }.apply()
+        }
+
+    override suspend fun readToken(): String =
+        withContext(coroutineDispatcherProvider.ioDispatcher()) {
+            sharedPreferences.getString(
+                TOKEN,
+                ""
+            ) ?: ""
+        }
 }
