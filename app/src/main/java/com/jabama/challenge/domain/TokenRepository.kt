@@ -1,4 +1,4 @@
-package com.example.login.domain
+package com.jabama.challenge.domain
 
 import kotlinx.coroutines.Deferred
 

@@ -1,7 +1,7 @@
-package com.example.login.data.api
+package com.jabama.challenge.data.api
 
-import com.example.login.data.model.RequestAccessToken
-import com.example.login.data.model.ResponseAccessToken
+import com.jabama.challenge.data.model.RequestAccessToken
+import com.jabama.challenge.data.model.ResponseAccessToken
 import kotlinx.coroutines.Deferred
 import retrofit2.http.Body
 import retrofit2.http.Headers

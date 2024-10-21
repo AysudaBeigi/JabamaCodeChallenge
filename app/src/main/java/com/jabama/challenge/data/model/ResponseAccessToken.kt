@@ -1,4 +1,4 @@
-package com.example.login.data.model
+package com.jabama.challenge.data.model
 
 import com.google.gson.annotations.SerializedName
 

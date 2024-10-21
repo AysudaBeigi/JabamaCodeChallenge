@@ -1,13 +1,14 @@
-package com.example.login.data.repository
+package com.jabama.challenge.data.repository
 
 import android.content.SharedPreferences
+import com.jabama.challenge.domain.TokenRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-private const val TOKEN = "TOKEN"
+
 class TokenRepositoryImpl(private val sharedPreferences: SharedPreferences) :
-    com.example.login.domain.TokenRepository {
+    TokenRepository {
     override fun saveToken(token: String): Deferred<Unit> =
         CoroutineScope(Dispatchers.IO).async { sharedPreferences.edit().apply { putString(TOKEN, token) }.apply() }
 

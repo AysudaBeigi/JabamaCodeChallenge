@@ -1,7 +1,7 @@
 package com.jabama.challenge.di
 
 import androidx.preference.PreferenceManager
-import com.example.login.data.api.AccessTokenService
+import com.jabama.challenge.data.api.AccessTokenService
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
