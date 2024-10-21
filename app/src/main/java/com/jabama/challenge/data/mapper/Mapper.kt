@@ -5,7 +5,7 @@ import com.jabama.challenge.data.model.ResponseAccessTokenDto
 import com.jabama.challenge.domain.model.RequestAccessToken
 import com.jabama.challenge.domain.model.ResponseAccessToken
 
-internal fun RequestAccessTokenDto.mapToRequestAccessToken() = RequestAccessToken(
+internal fun RequestAccessToken.mapToRequestAccessTokenDto() = RequestAccessTokenDto(
     clientId = clientId,
     clientSecret = clientSecret,
     code = code,
