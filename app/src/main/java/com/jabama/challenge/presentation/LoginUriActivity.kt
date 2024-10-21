@@ -9,8 +9,8 @@ import android.os.Bundle
 import org.koin.android.ext.android.inject
 
 class LoginUriActivity : Activity() {
-    private val tokenRepository: com.jabama.challenge.domain.TokenRepository by inject()
-    private val accessTokenDataSource: com.jabama.challenge.domain.AccessTokenDataSource by inject()
+    private val ITokenRepository: com.jabama.challenge.domain.ITokenRepository by inject()
+    private val IAccessTokenDataSource: com.jabama.challenge.domain.IAccessTokenDataSource by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
