@@ -7,7 +7,7 @@ sealed class GithubNavigation(private val navigationName: String) {
     }
 
     data object AuthorizeScreen : GithubNavigation("Authorize")
-    data object LoginScreen : GithubNavigation("login")
+    data object RepositoryListScreen : GithubNavigation("repositoryList")
 
     fun createRoute(): String {
         return "$routeName/$navigationName"

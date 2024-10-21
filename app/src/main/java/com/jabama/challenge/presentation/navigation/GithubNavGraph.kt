@@ -5,12 +5,17 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.jabama.challenge.presentation.GithubViewModel
 import com.jabama.challenge.presentation.ui.Authorize
+import com.jabama.challenge.presentation.ui.RepositoriesScreen
+import com.jabama.challenge.presentation.viewmodel.GithubViewModel
+import com.jabama.challenge.presentation.viewmodel.RepositoryViewModel
 import org.koin.androidx.compose.getViewModel
 
 
@@ -29,12 +34,23 @@ internal fun GithubNavGraph() {
         ) {
             composable(route = GithubNavigation.AuthorizeScreen.createRoute()) {
                 val githubViewModel = getViewModel<GithubViewModel>()
-                Authorize (onAuthorizeClick = {
-                    githubViewModel.authorize()
-                })
+                Authorize(onAuthorizeClick = { githubViewModel.authorize() })
             }
-            composable(route = GithubNavigation.LoginScreen.createRoute()) {
-
+            composable(route = GithubNavigation.RepositoryListScreen.createRoute()) {
+                val viewModel = getViewModel<RepositoryViewModel>()
+                val state = viewModel.state.collectAsStateWithLifecycle().value
+                val keyword = remember {
+                    mutableStateOf("")
+                }
+                RepositoriesScreen(
+                    keyword = keyword.value,
+                    modifier = Modifier,
+                    loadableRepositories = state.loadableRepositories,
+                    onSearchValueChange = {
+                        keyword.value = it
+                        viewModel.searchRepository(keyword = keyword.value)
+                    },
+                )
             }
         }
     }
