@@ -1,4 +1,4 @@
-package com.jabama.challenge.presentation
+package com.jabama.challenge.presentation.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.jabama.challenge.presentation.GithubViewModel
 import com.jabama.challenge.presentation.ui.Authorize
 import org.koin.androidx.compose.getViewModel
 
@@ -24,24 +25,18 @@ internal fun GithubNavGraph() {
         val navController = rememberNavController()
         NavHost(
             navController = navController,
-            startDestination = GithubInformationNavigation.AuthorizeScreen.route
+            startDestination = GithubNavigation.AuthorizeScreen.route
         ) {
-            composable(route = GithubInformationNavigation.AuthorizeScreen.route) {
+            composable(route = GithubNavigation.AuthorizeScreen.route) {
                 val githubViewModel = getViewModel<GithubViewModel>()
                 Authorize (onAuthorizeClick = {
                     githubViewModel.authorize()
                 })
             }
-            composable(route = GithubInformationNavigation.LoginScreen.route) {
+            composable(route = GithubNavigation.LoginScreen.route) {
 
             }
         }
     }
-}
-
-sealed class GithubInformationNavigation(val route: String) {
-    object AuthorizeScreen : GithubInformationNavigation("Authorize")
-    object LoginScreen : GithubInformationNavigation("login")
-
 }
 
