@@ -2,7 +2,7 @@ package com.jabama.challenge.domain
 
 import kotlinx.coroutines.Deferred
 
-interface TokenRepository {
+interface ITokenRepository {
     fun saveToken(token: String) : Deferred<Unit>
     fun readToken(): Deferred<String>
 }
