@@ -1,7 +1,7 @@
 package com.jabama.challenge
 
 import android.app.Application
-import com.jabama.challenge.di.accessTokenModule
+import com.jabama.challenge.di.githubModule
 import com.jabama.challenge.di.appModule
 import com.jabama.challenge.di.networkModule
 import org.koin.android.ext.koin.androidContext
@@ -12,7 +12,7 @@ class Application : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@Application)
-            modules(listOf(appModule, networkModule, accessTokenModule))
+            modules(listOf(appModule, networkModule, githubModule))
         }
     }
 }

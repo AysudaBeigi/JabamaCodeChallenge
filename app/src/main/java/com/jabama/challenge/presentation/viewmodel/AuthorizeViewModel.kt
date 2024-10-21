@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 
-class GithubViewModel(
+class AuthorizeViewModel(
     private val saveTokenUseCase: SaveTokenUseCase,
     private val getAccessTokenUseCase: GetAccessTokenUseCase,
     private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
