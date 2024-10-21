@@ -1,11 +1,11 @@
 package com.jabama.challenge.di
 
-import com.jabama.challenge.data.repository.AccessTokenDataSourceImpl
+import com.jabama.challenge.data.repository.IAccessTokenDataSourceImpl
 import com.jabama.challenge.data.repository.TokenRepositoryImpl
-import com.jabama.challenge.domain.AccessTokenDataSource
+import com.jabama.challenge.domain.IAccessTokenDataSource
 import org.koin.dsl.module
 
 val accessTokenModule = module {
-    factory { AccessTokenDataSourceImpl(get()) as AccessTokenDataSource }
+    factory<IAccessTokenDataSource> { IAccessTokenDataSourceImpl(get()) }
     single { TokenRepositoryImpl(get()) }
 }
