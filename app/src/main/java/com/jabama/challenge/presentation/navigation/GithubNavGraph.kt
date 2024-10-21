@@ -25,15 +25,15 @@ internal fun GithubNavGraph() {
         val navController = rememberNavController()
         NavHost(
             navController = navController,
-            startDestination = GithubNavigation.AuthorizeScreen.route
+            startDestination = GithubNavigation.AuthorizeScreen.createRoute()
         ) {
-            composable(route = GithubNavigation.AuthorizeScreen.route) {
+            composable(route = GithubNavigation.AuthorizeScreen.createRoute()) {
                 val githubViewModel = getViewModel<GithubViewModel>()
                 Authorize (onAuthorizeClick = {
                     githubViewModel.authorize()
                 })
             }
-            composable(route = GithubNavigation.LoginScreen.route) {
+            composable(route = GithubNavigation.LoginScreen.createRoute()) {
 
             }
         }

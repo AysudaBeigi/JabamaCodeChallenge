@@ -1,4 +1,4 @@
-package com.jabama.challenge.presentation
+package com.jabama.challenge.presentation.ui
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
