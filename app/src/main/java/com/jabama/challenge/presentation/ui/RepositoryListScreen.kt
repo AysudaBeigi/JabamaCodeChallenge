@@ -44,7 +44,9 @@ fun RepositoriesScreen(
     onSearchValueChange: (String) -> Unit,
     keyword: String,
 ) {
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(modifier = modifier
+        .fillMaxSize()
+        .padding(16.dp)) {
         SearchBar(
             modifier = Modifier,
             onValueChange = onSearchValueChange,
@@ -92,21 +94,24 @@ fun LoadedRepositoryList(
 ) {
     val repositoryListState = rememberLazyListState()
 
-    if (list.isEmpty())
+    if (list.isEmpty()) {
         EmptyItem()
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        state = repositoryListState, horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        items(list) { item ->
-            RepositoryItem(
-                repository = item,
-                modifier = Modifier
-            )
+    } else {
+        LazyColumn(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            state = repositoryListState, horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            items(list) { item ->
+                RepositoryItem(
+                    repository = item,
+                    modifier = Modifier
+                )
+            }
         }
     }
+
 }
 
 @Composable
