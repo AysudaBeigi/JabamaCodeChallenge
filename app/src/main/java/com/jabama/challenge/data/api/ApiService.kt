@@ -11,7 +11,7 @@ import retrofit2.http.POST
 
 interface ApiService {
     @Headers("Accept:application/json")
-    @POST("https://github.com/login/oauth/access_token")
+    @POST("login/oauth/access_token")
     fun accessToken(@Body requestAccessTokenDto: RequestAccessTokenDto): ResponseAccessTokenDto
 
     @GET("user/repos")

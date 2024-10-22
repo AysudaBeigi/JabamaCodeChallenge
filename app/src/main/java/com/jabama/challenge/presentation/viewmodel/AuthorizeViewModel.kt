@@ -31,13 +31,13 @@ class AuthorizeViewModel(
         val loadableToken: LoadableData<ResponseAccessToken> = NotLoaded,
     )
 
-    fun authorize() {
+    fun authorize(code:String) {
         viewModelScope.launch(coroutineDispatcherProvider.ioDispatcher()) {
             _state.update {
                 it.copy(loadableToken = Loading)
             }
             runCatching {
-                getAccessTokenUseCase.execute()
+                getAccessTokenUseCase.execute(code)
             }.onSuccess { token ->
                 token?.let {
                     _state.update {
@@ -53,4 +53,5 @@ class AuthorizeViewModel(
 
         }
     }
+
 }

@@ -39,7 +39,7 @@ val networkModule = module {
     single(named(RETROFIT)) {
         Retrofit.Builder()
             .client(get(named(OK_HTTP)))
-            .baseUrl("http://api.github.com")
+            .baseUrl("https://github.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
