@@ -17,9 +17,9 @@ const val WRITE_TIMEOUT = "WRITE_TIMEOUT"
 const val CONNECTION_TIMEOUT = "CONNECTION_TIMEOUT"
 val networkModule = module {
 
-    single(named(READ_TIMEOUT)) { 30 * 1000 }
-    single(named(WRITE_TIMEOUT)) { 10 * 1000 }
-    single(named(CONNECTION_TIMEOUT)) { 10 * 1000 }
+    single(named(READ_TIMEOUT)) { 30 * 1000L }
+    single(named(WRITE_TIMEOUT)) { 10 * 1000L }
+    single(named(CONNECTION_TIMEOUT)) { 10 * 1000L }
 
     factory<Interceptor> {
         HttpLoggingInterceptor()
@@ -29,9 +29,9 @@ val networkModule = module {
 
     factory(named(OK_HTTP)) {
         OkHttpClient.Builder()
-            .readTimeout(get(named(READ_TIMEOUT)), TimeUnit.MILLISECONDS)
-            .writeTimeout(get(named(WRITE_TIMEOUT)), TimeUnit.MILLISECONDS)
-            .connectTimeout(get(named(CONNECTION_TIMEOUT)), TimeUnit.MILLISECONDS)
+            .readTimeout(get<Long>(named(READ_TIMEOUT)), TimeUnit.MILLISECONDS)
+            .writeTimeout(get<Long>(named(WRITE_TIMEOUT)), TimeUnit.MILLISECONDS)
+            .connectTimeout(get<Long>(named(CONNECTION_TIMEOUT)), TimeUnit.MILLISECONDS)
             .addInterceptor(get<Interceptor>())
             .build()
     }

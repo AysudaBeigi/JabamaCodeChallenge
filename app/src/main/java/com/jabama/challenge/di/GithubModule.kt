@@ -4,6 +4,7 @@ import com.jabama.challenge.base.coroutineDispatcherProvider
 import com.jabama.challenge.data.repository.GithubRepositoryImpl
 import com.jabama.challenge.data.repository.TokenRepositoryImpl
 import com.jabama.challenge.domain.IGithubRepository
+import com.jabama.challenge.domain.ITokenRepository
 import com.jabama.challenge.domain.usecase.GetAccessTokenUseCase
 import com.jabama.challenge.domain.usecase.ReadTokenUseCase
 import com.jabama.challenge.domain.usecase.SaveTokenUseCase
@@ -15,6 +16,7 @@ import org.koin.dsl.module
 val githubModule = module {
 
     single<IGithubRepository> { GithubRepositoryImpl(get()) }
+    single<ITokenRepository> { TokenRepositoryImpl(get(), coroutineDispatcherProvider()) }
 
     single { TokenRepositoryImpl(get(), coroutineDispatcherProvider()) }
 
