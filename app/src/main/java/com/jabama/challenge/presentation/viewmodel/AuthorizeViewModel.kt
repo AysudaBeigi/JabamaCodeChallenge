@@ -24,10 +24,10 @@ class AuthorizeViewModel(
     private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
 ) : ViewModel() {
 
-    private val _state: MutableStateFlow<GithubState> = MutableStateFlow(GithubState())
-    val state: StateFlow<GithubState> = _state.asStateFlow()
+    private val _state: MutableStateFlow<AuthorizeState> = MutableStateFlow(AuthorizeState())
+    val state: StateFlow<AuthorizeState> = _state.asStateFlow()
 
-    data class GithubState(
+    data class AuthorizeState(
         val loadableToken: LoadableData<ResponseAccessToken> = NotLoaded,
     )
 
@@ -39,12 +39,10 @@ class AuthorizeViewModel(
             runCatching {
                 getAccessTokenUseCase.execute(code)
             }.onSuccess { token ->
-                token?.let {
-                    _state.update {
-                        it.copy(loadableToken = Loaded(token))
-                    }
-                    saveTokenUseCase.execute(token = token.accessToken)
+                _state.update {
+                    it.copy(loadableToken = Loaded(token))
                 }
+                saveTokenUseCase.execute(token = token.accessToken)
             }.onFailure { throwable ->
                 _state.update {
                     it.copy(loadableToken = Failed(throwable))

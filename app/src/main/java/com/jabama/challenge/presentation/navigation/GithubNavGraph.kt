@@ -1,6 +1,7 @@
 package com.jabama.challenge.presentation.navigation
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
@@ -14,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -24,6 +26,7 @@ import com.jabama.challenge.presentation.viewmodel.AuthorizeViewModel
 import com.jabama.challenge.presentation.viewmodel.RepositoryViewModel
 import org.koin.androidx.compose.getViewModel
 
+private const val CODE = "code"
 
 @Composable
 internal fun GithubNavGraph() {
@@ -40,22 +43,10 @@ internal fun GithubNavGraph() {
         ) {
             composable(route = GithubNavigation.AuthorizeScreen.createRoute()) {
                 val context = LocalContext.current
-                val currentIntent = (context as Activity).intent
-                val authorizeViewModel = getViewModel<AuthorizeViewModel>()
-                LaunchedEffect(currentIntent) {
-                    currentIntent?.data?.let { uri ->
-                        val code = uri.getQueryParameter("code")
-                        if (code != null) {
-                            authorizeViewModel.authorize(code)
-                            navController.navigate(GithubNavigation.RepositoryListScreen.createRoute())
-                        }
-                    }
-                }
-
+                AuthorizeAndHandleDeepLink(navController, context = context)
                 AuthorizeScreen(onAuthorizeClick = {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                     context.startActivity(intent)
-
                 })
             }
             composable(route = GithubNavigation.RepositoryListScreen.createRoute()) {
@@ -73,6 +64,22 @@ internal fun GithubNavGraph() {
                         viewModel.searchRepository(keyword = keyword.value)
                     },
                 )
+            }
+        }
+    }
+}
+
+@Composable
+private fun AuthorizeAndHandleDeepLink(navController: NavHostController, context: Context) {
+
+    val currentIntent = (context as Activity).intent
+    val authorizeViewModel = getViewModel<AuthorizeViewModel>()
+    LaunchedEffect(currentIntent) {
+        currentIntent?.data?.let { uri ->
+            val code = uri.getQueryParameter(CODE)
+            if (code != null) {
+                authorizeViewModel.authorize(code = code)
+                navController.navigate(GithubNavigation.RepositoryListScreen.createRoute())
             }
         }
     }
