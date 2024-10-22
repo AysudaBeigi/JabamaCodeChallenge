@@ -10,7 +10,7 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface ApiService {
-    @Headers("Accept:application/json")
+    @Headers("Accept: application/json")
     @POST("login/oauth/access_token")
     fun accessToken(@Body requestAccessTokenDto: RequestAccessTokenDto): ResponseAccessTokenDto
 

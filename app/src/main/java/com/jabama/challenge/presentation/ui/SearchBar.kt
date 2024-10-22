@@ -40,7 +40,7 @@ fun SearchBar(
         shape = CircleShape,
         value = keyword,
         maxLines = 1,
-        modifier = modifier.fillMaxWidth().height(40.dp),
+        modifier = modifier.fillMaxWidth().height(48.dp),
         isError = false,
         onValueChange = { onValueChange(it) },
         keyboardOptions = KeyboardOptions(

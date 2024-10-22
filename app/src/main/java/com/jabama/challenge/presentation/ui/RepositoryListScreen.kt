@@ -48,7 +48,7 @@ fun RepositoriesScreen(
         .fillMaxSize()
         .padding(16.dp)) {
         SearchBar(
-            modifier = Modifier,
+            modifier = Modifier.fillMaxWidth(),
             onValueChange = onSearchValueChange,
             keyword = keyword,
         )
