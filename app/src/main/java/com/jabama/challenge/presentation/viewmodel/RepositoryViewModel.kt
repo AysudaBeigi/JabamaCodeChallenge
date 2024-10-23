@@ -24,7 +24,7 @@ class RepositoryViewModel(
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<RepositoryState> = MutableStateFlow(RepositoryState())
-
+    private var totalRepositoryList: List<Repository> = listOf()
     val state: StateFlow<RepositoryState> = _state.asStateFlow()
 
     data class RepositoryState(
@@ -33,7 +33,7 @@ class RepositoryViewModel(
     )
 
     init {
-       loadRepositoryList()
+        loadRepositoryList()
     }
 
     private fun loadRepositoryList() {
@@ -67,6 +67,7 @@ class RepositoryViewModel(
                 _state.update {
                     it.copy(loadableRepositories = Loaded(repositoryList))
                 }
+                totalRepositoryList = repositoryList
             }.onFailure { throwable ->
                 _state.update {
                     it.copy(loadableRepositories = Failed(throwable))
@@ -76,10 +77,15 @@ class RepositoryViewModel(
         }
     }
 
-    fun searchRepository(keyword: String): List<Repository>? {
-        return _state.value.loadableRepositories.data?.filter {
-            it.name.contains(keyword)
+    fun searchRepository(keyword: String) {
+        _state.update {
+            _state.value.loadableRepositories.data?.filter {
+                it.name.contains(keyword)
+            }?.let { result -> it.copy(loadableRepositories = Loaded(result)) } ?: run {
+                it.copy(loadableRepositories = Loaded(totalRepositoryList))
+            }
         }
+
     }
 
 }
