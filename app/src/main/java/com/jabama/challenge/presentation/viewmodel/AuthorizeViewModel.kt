@@ -1,5 +1,8 @@
 package com.jabama.challenge.presentation.viewmodel
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jabama.challenge.base.CoroutineDispatcherProvider
@@ -11,6 +14,7 @@ import com.jabama.challenge.base.NotLoaded
 import com.jabama.challenge.domain.model.ResponseAccessToken
 import com.jabama.challenge.domain.usecase.GetAccessTokenUseCase
 import com.jabama.challenge.domain.usecase.SaveTokenUseCase
+import com.jabama.challenge.domain.usecase.url
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,7 +35,7 @@ class AuthorizeViewModel(
         val loadableToken: LoadableData<ResponseAccessToken> = NotLoaded,
     )
 
-    fun authorize(code:String) {
+    fun getAccessTokenAndSave(code:String) {
         viewModelScope.launch(coroutineDispatcherProvider.ioDispatcher()) {
             _state.update {
                 it.copy(loadableToken = Loading)
@@ -50,6 +54,11 @@ class AuthorizeViewModel(
             }
 
         }
+    }
+
+    fun authorize(context:Context){
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        context.startActivity(intent)
     }
 
 }
