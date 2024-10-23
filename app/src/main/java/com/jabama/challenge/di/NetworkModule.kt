@@ -1,16 +1,13 @@
 package com.jabama.challenge.di
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
-import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 private const val CONNECT_TIMEOUT = 10 * 1000L
@@ -32,18 +29,10 @@ fun getLogger(): Interceptor {
 }
 
 
-private val json = Json(builderAction = {
-    ignoreUnknownKeys = true
-}
-)
-
-@OptIn(ExperimentalSerializationApi::class)
 private fun Scope.retrofitBuilder(): Retrofit {
     return Retrofit.Builder()
         .baseUrl("https://api.github.com")
-        .addConverterFactory(
-            json.asConverterFactory(MediaType.get("application/json"))
-        )
+        .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .client(get())
         .build()
